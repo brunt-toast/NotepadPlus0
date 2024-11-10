@@ -51,6 +51,10 @@ namespace NotepadPlusZero
             Title = "Notepad+0";
         }
 
+        /// <summary>
+        ///     Prompt the user to select a file, then load it into the buffer. 
+        ///     If the user cancels, do nothing. 
+        /// </summary>
         private async void OpenFile()
         {
             var filePicker = new FileOpenPicker();
@@ -80,6 +84,10 @@ namespace NotepadPlusZero
             UpdateTitle();
         }
 
+        /// <summary>
+        ///     Save the buffer to the selected file path. 
+        ///     If there is no path, call <see cref="SaveFileAs"/>. 
+        /// </summary>
         private async void SaveFile()
         {
             if (FilePath is null)
@@ -106,6 +114,9 @@ namespace NotepadPlusZero
             UpdateTitle();
         }
 
+        /// <summary>
+        ///     Prompt the user to choose a new file location, then save to that location.
+        /// </summary>
         private async void SaveFileAs()
         {
             var savePicker = new FileSavePicker();
@@ -120,6 +131,9 @@ namespace NotepadPlusZero
             SaveFile();
         }
 
+        /// <summary>
+        ///     Update the window title with the file name and save state. 
+        /// </summary>
         private async void UpdateTitle()
         {
             if (FilePath is null) Title = "Notepad+0";
