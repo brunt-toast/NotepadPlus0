@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Brunton"
+  given-names: "Joshua"
+  orcid: "https://orcid.org/0009-0009-2017-7392"
+title: "Dotnet Install Helper"
+date-released: 2024-10-30
+url: "https://github.com/brunt-toast/dotnet-install-helper"
