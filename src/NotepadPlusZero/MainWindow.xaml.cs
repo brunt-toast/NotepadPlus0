@@ -15,6 +15,7 @@ namespace NotepadPlusZero
 {
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private const double DefaultFontSize = 14;
         private string? _filePath = null;
 
         public string? FilePath
@@ -30,12 +31,20 @@ namespace NotepadPlusZero
         public ICommand OpenFileCommand { get; }
         public ICommand SaveFileCommand { get; }
         public ICommand SaveFileAsCommand { get; }
+        public ICommand ShowNotImplementedMessageCommand { get; }
+        public ICommand ZoomInCommand { get; }
+        public ICommand ZoomOutCommand { get; }
+        public ICommand RestoreDefaultZoomCommand { get; }
 
         public MainWindow()
         {
             OpenFileCommand = new Command(OpenFile, () => true);
             SaveFileCommand = new Command(SaveFile, () => true);
             SaveFileAsCommand = new Command(SaveFileAs, () => true);
+            ShowNotImplementedMessageCommand = new Command(() => NotImplementedTeachingTip.IsOpen = true, () => true);
+            ZoomInCommand = new Command(() => EditBox.FontSize += 1, () => true);
+            ZoomOutCommand = new Command(() => EditBox.FontSize -= 1, () => true);
+            RestoreDefaultZoomCommand = new Command(() => EditBox.FontSize = DefaultFontSize, () => true);
 
             InitializeComponent();
 

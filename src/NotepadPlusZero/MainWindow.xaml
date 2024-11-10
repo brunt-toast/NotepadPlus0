@@ -27,75 +27,75 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Exit" />
+                <MenuFlyoutItem Text="Exit" Command="{x:Bind ShowNotImplementedMessageCommand}" />
             </MenuBarItem>
             <MenuBarItem Title="Edit">
-                <MenuFlyoutItem Text="Undo">
+                <MenuFlyoutItem Text="Undo" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Z" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Cut">
+                <MenuFlyoutItem Text="Cut" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="X" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Copy">
+                <MenuFlyoutItem Text="Copy" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="C" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Paste">
+                <MenuFlyoutItem Text="Paste" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="V" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Delete">
+                <MenuFlyoutItem Text="Delete" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Find">
+                <MenuFlyoutItem Text="Find" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="F" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Find next">
+                <MenuFlyoutItem Text="Find next" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F3" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Find previous">
+                <MenuFlyoutItem Text="Find previous" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Shift" Key="F3" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Replace">
+                <MenuFlyoutItem Text="Replace" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="H" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Go to">
+                <MenuFlyoutItem Text="Go to" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="O" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem Title="View">
-                <MenuFlyoutItem Text="Zoom in">
+                <MenuFlyoutItem Text="Zoom in" Command="{x:Bind ZoomInCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Add" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Zoom out">
+                <MenuFlyoutItem Text="Zoom out" Command="{x:Bind ZoomOutCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Subtract" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Restore default zoom">
+                <MenuFlyoutItem Text="Restore default zoom" Command="{x:Bind RestoreDefaultZoomCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Number0" />
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -104,5 +104,8 @@
         </MenuBar>
 
         <RichEditBox Grid.Row="1" x:Name="EditBox" />
+
+        <TeachingTip IsLightDismissEnabled="True" x:Name="NotImplementedTeachingTip"
+                     Title="Not Implemented" Subtitle="This functionality has not yet been implemented." />
     </Grid>
 </Window>
