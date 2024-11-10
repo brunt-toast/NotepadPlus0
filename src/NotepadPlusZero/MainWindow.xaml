@@ -109,6 +109,7 @@
         </MenuBar>
 
         <RichEditBox Grid.Row="1" x:Name="EditBox"
+                     AllowDrop="True" DragOver="EditBox_DragOver" Drop="EditBox_Drop"
                      Background="{ThemeResource ControlFillColorTertiaryBrush}" />
 
         <TeachingTip IsLightDismissEnabled="True" x:Name="NotImplementedTeachingTip"

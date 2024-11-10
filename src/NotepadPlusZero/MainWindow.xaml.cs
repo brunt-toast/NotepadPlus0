@@ -7,8 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Pickers.Provider;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace NotepadPlusZero
@@ -65,6 +69,11 @@ namespace NotepadPlusZero
             if (file is null) return;
             FilePath = file.Path;
 
+            await LoadFileFromFilePath();
+        }
+
+        private async Task LoadFileFromFilePath()
+        {
             try
             {
                 string content = await File.ReadAllTextAsync(FilePath);
@@ -163,6 +172,27 @@ namespace NotepadPlusZero
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void EditBox_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
+        }
+
+        private async void EditBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                IReadOnlyList<IStorageItem> items = await e.DataView.GetStorageItemsAsync();
+                if (items is null) return;
+                if (items.Count != 1) return;
+                if (items[0] is not StorageFile file) return;
+                FilePath = file.Path;
+                await LoadFileFromFilePath();
+            }
         }
     }
 }
