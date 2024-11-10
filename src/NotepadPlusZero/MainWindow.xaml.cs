@@ -67,9 +67,36 @@ namespace NotepadPlusZero
             filePicker.FileTypeFilter.Add("*");
             var file = await filePicker.PickSingleFileAsync();
             if (file is null) return;
+            if (!await ConfirmDiscardBuffer()) return;
+            
             FilePath = file.Path;
 
             await LoadFileFromFilePath();
+        }
+
+        private async Task<bool> ConfirmDiscardBuffer()
+        {
+            if (FilePath is null || await FileHasChanges())
+            {
+                bool cancel = false;
+                ContentDialog dialog = new ContentDialog()
+                {
+                    XamlRoot = EditBox.XamlRoot,
+                    Title = "Unsaved changes",
+                    Content = "The current file has unsaved changes. Are you sure you want to continue?",
+                    PrimaryButtonText = "Save and continue",
+                    SecondaryButtonText = "Continue without saving",
+                    CloseButtonText = "Cancel",
+                    PrimaryButtonCommand = new Command(SaveFile, () => true),
+                    SecondaryButtonCommand = new Command(() => { }, () => true),
+                    CloseButtonCommand = new Command(() => cancel = true, () => true),
+                    DefaultButton = ContentDialogButton.Close
+                };
+                await dialog.ShowAsync();
+                return !cancel;
+            }
+
+            return true;
         }
 
         private async Task LoadFileFromFilePath()
@@ -109,7 +136,7 @@ namespace NotepadPlusZero
             try
             {
                 await File.WriteAllTextAsync(FilePath, textboxContent);
-            } 
+            }
             catch (Exception ex)
             {
                 ContentDialog dialog = new()
@@ -147,18 +174,7 @@ namespace NotepadPlusZero
         {
             if (FilePath is null) Title = "Notepad+0";
 
-            EditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string bufferContent);
-            string fileContent;
-            try
-            {
-                fileContent = await File.ReadAllTextAsync(FilePath);
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
-
-            if (fileContent == bufferContent)
+            if (await FileHasChanges())
             {
                 Title = $"Notepad+0 - {FilePath}";
             }
@@ -190,9 +206,19 @@ namespace NotepadPlusZero
                 if (items is null) return;
                 if (items.Count != 1) return;
                 if (items[0] is not StorageFile file) return;
+                if (!await ConfirmDiscardBuffer()) return;
                 FilePath = file.Path;
                 await LoadFileFromFilePath();
             }
+        }
+
+        private async Task<bool> FileHasChanges()
+        {
+            EditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string contentInBuffer);
+            if (FilePath is null) return !string.IsNullOrEmpty(contentInBuffer);
+
+            string fileOnDisk = await File.ReadAllTextAsync(FilePath);
+            return fileOnDisk == contentInBuffer;
         }
     }
 }
