@@ -35,6 +35,11 @@
                         <KeyboardAccelerator Modifiers="Control" Key="Z" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Redo" Command="{x:Bind ShowNotImplementedMessageCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="Y" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem Text="Cut" Command="{x:Bind ShowNotImplementedMessageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
