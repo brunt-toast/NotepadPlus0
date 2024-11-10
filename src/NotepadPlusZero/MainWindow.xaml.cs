@@ -61,6 +61,8 @@ namespace NotepadPlusZero
             {
                 throw new NotImplementedException("Should be a dialog here");
             }
+
+            UpdateTitle();
         }
 
         private async void SaveFile()
@@ -73,6 +75,7 @@ namespace NotepadPlusZero
 
             EditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string textboxContent);
             await File.WriteAllTextAsync(FilePath, textboxContent);
+            UpdateTitle();
         }
 
         private async void SaveFileAs()
@@ -87,6 +90,31 @@ namespace NotepadPlusZero
             if (file is null) return;
             FilePath = file.Path;
             SaveFile();
+        }
+
+        private async void UpdateTitle()
+        {
+            if (FilePath is null) Title = "Notepad+0";
+
+            EditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string bufferContent);
+            string fileContent;
+            try
+            {
+                fileContent = await File.ReadAllTextAsync(FilePath);
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException("Should be a dialog here");
+            }
+
+            if (fileContent == bufferContent)
+            {
+                Title = $"Notepad+0 - {FilePath}";
+            }
+            else
+            {
+                Title = $"Notepad+0 - {FilePath}*";
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
