@@ -66,9 +66,15 @@ namespace NotepadPlusZero
                 string content = await File.ReadAllTextAsync(FilePath);
                 EditBox.Document.SetText(Microsoft.UI.Text.TextSetOptions.None, content);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new NotImplementedException("Should be a dialog here");
+                ContentDialog dialog = new()
+                {
+                    XamlRoot = EditBox.XamlRoot,
+                    Title = "Something went wrong",
+                    Content = $"An error occured while reading the file. ({ex.Message})"
+                };
+                await dialog.ShowAsync();
             }
 
             UpdateTitle();
@@ -83,7 +89,20 @@ namespace NotepadPlusZero
             }
 
             EditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string textboxContent);
-            await File.WriteAllTextAsync(FilePath, textboxContent);
+            try
+            {
+                await File.WriteAllTextAsync(FilePath, textboxContent);
+            } 
+            catch (Exception ex)
+            {
+                ContentDialog dialog = new()
+                {
+                    XamlRoot = EditBox.XamlRoot,
+                    Title = "Something went wrong",
+                    Content = $"An error occured while writing the file. ({ex.Message})"
+                };
+                await dialog.ShowAsync();
+            }
             UpdateTitle();
         }
 
@@ -113,7 +132,7 @@ namespace NotepadPlusZero
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException("Should be a dialog here");
+                return;
             }
 
             if (fileContent == bufferContent)
