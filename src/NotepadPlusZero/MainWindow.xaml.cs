@@ -1,3 +1,5 @@
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -42,6 +44,8 @@ namespace NotepadPlusZero
 
         public MainWindow()
         {
+            Activated += MainWindow_Activated;
+
             OpenFileCommand = new Command(OpenFile, () => true);
             SaveFileCommand = new Command(SaveFile, () => true);
             SaveFileAsCommand = new Command(SaveFileAs, () => true);
@@ -53,6 +57,14 @@ namespace NotepadPlusZero
             InitializeComponent();
 
             Title = "Notepad+0";
+        }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+            appWindow.SetIcon(@"Assets\icon.ico");
         }
 
         /// <summary>
@@ -68,7 +80,7 @@ namespace NotepadPlusZero
             var file = await filePicker.PickSingleFileAsync();
             if (file is null) return;
             if (!await ConfirmDiscardBuffer()) return;
-            
+
             FilePath = file.Path;
 
             await LoadFileFromFilePath();
