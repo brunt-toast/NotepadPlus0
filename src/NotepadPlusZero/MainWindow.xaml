@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid RowDefinitions="auto,*">
-        <MenuBar>
+        <MenuBar Background="{ThemeResource ControlFillColorDefaultBrush}">
             <MenuBarItem Title="File">
                 <MenuFlyoutItem Text="Open" Command="{x:Bind OpenFileCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
@@ -108,7 +108,8 @@
             </MenuBarItem>
         </MenuBar>
 
-        <RichEditBox Grid.Row="1" x:Name="EditBox" />
+        <RichEditBox Grid.Row="1" x:Name="EditBox"
+                     Background="{ThemeResource ControlFillColorTertiaryBrush}" />
 
         <TeachingTip IsLightDismissEnabled="True" x:Name="NotImplementedTeachingTip"
                      Title="Not Implemented" Subtitle="This functionality has not yet been implemented." />
